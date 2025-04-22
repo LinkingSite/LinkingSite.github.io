@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>godot4制作2D游戏12———用户界面</title>
+      <link href="/2025/04/22/godot4_2d/godot4_2d_12/"/>
+      <url>/2025/04/22/godot4_2d/godot4_2d_12/</url>
+      
+        <content type="html"><![CDATA[<h3 id="新建用户场景"><a href="#新建用户场景" class="headerlink" title="新建用户场景"></a>新建用户场景</h3><ul><li>创建一个canvasLayer节点作为新的PlayerHud场景<ul><li>在下面创建一个Control节点</li><li>在Control节点下创建一个Sprite节点，导入素材</li><li>在Control下面创建一个HFlowContainer节点<ul><li>在HFlowContainer节点下创建一个Control，作为HeartGUI场景</li><li>编写脚本heart_gui.gd并在其节点下添加Sprite子节点  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class_name HeartGUI extends Control</span><br><span class="line"></span><br><span class="line"><span class="meta">@onready var sprite: Sprite2D = $Sprite2D</span></span><br><span class="line"></span><br><span class="line">var value: <span class="built_in">int</span> = <span class="number">2</span> :</span><br><span class="line"><span class="built_in">set</span> (_value):</span><br><span class="line">value = _value</span><br><span class="line">update_sprite()</span><br><span class="line"></span><br><span class="line">func update_sprite() -&gt; void:</span><br><span class="line">sprite.frame = value</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li></ul></li></ul></li><li>添加PlayerHud到AutoLoad</li><li>添加PlayerHud的脚本文件  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">extends CanvasLayer</span><br><span class="line"></span><br><span class="line">var hearts: Array[HeartGUI] = []</span><br><span class="line"></span><br><span class="line">func _ready() -&gt; void:</span><br><span class="line"><span class="keyword">for</span> heart <span class="keyword">in</span> $Control/HFlowContainer.get_children():</span><br><span class="line"><span class="keyword">if</span> heart <span class="keyword">is</span> HeartGUI:</span><br><span class="line">hearts.append(heart)</span><br><span class="line">heart.visible = false</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">func update_hp(_hp: <span class="built_in">int</span>, _max_hp: <span class="built_in">int</span>) -&gt; void:</span><br><span class="line">update_max_hp(_max_hp)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> _max_hp:</span><br><span class="line">update_heart(i, _hp)</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">func update_heart(_index: <span class="built_in">int</span>, _hp: <span class="built_in">int</span>) -&gt; void:</span><br><span class="line">var _value = clampi(_hp - _index * <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">hearts[_index].value = _value</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func update_max_hp(_max_hp: <span class="built_in">int</span>) -&gt; void:</span><br><span class="line">var _count: <span class="built_in">int</span> = roundi(_max_hp * <span class="number">0.5</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> _max_hp:</span><br><span class="line"><span class="keyword">if</span> i &lt; _count:</span><br><span class="line">hearts[i].visible = true</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">hearts[i].visible = false</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> godot4制作2D游戏 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> godot4制作2D游戏 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>godot4制作2D游戏11———玩家眩晕状态</title>
       <link href="/2025/04/22/godot4_2d/godot4_2d_11/"/>
       <url>/2025/04/22/godot4_2d/godot4_2d_11/</url>
