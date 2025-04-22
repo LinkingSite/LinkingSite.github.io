@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>godot4制作2D游戏13———用户关卡配置</title>
+      <link href="/2025/04/22/godot4_2d/godot4_2d_13/"/>
+      <url>/2025/04/22/godot4_2d/godot4_2d_13/</url>
+      
+        <content type="html"><![CDATA[<h3 id="创建Spwan场景"><a href="#创建Spwan场景" class="headerlink" title="创建Spwan场景"></a>创建Spwan场景</h3><ul><li><p>创建一个新场景，只需要一张图片代表Player</p><ul><li>添加脚本player_spawn.gd  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">extends Node2D</span><br><span class="line"></span><br><span class="line">func _ready() -&gt; void:</span><br><span class="line">visible = false</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> PlayerManager.player_spawned:</span><br><span class="line">PlayerManager.set_player_position(global_position)</span><br><span class="line">PlayerManager.player_spawned = true</span><br><span class="line"><span class="built_in">print</span>(global_position)</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li></ul></li><li><p>修改PlayerManager脚本</p>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">extends Node</span><br><span class="line"></span><br><span class="line">const PLAYER = preload(<span class="string">&quot;res://Player/player.tscn&quot;</span>)</span><br><span class="line"></span><br><span class="line">var player: Player</span><br><span class="line">var player_spawned: <span class="built_in">bool</span> = false</span><br><span class="line"></span><br><span class="line">func  _ready() -&gt; void:</span><br><span class="line">add_player_instance()</span><br><span class="line"><span class="keyword">await</span> get_tree().create_timer(<span class="number">0.2</span>).timeout</span><br><span class="line">player_spawned = true</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">func add_player_instance() -&gt; void:</span><br><span class="line">player = PLAYER.instantiate()</span><br><span class="line">add_child(player)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func set_player_position(_pos: Vector2) -&gt; void:</span><br><span class="line">player.global_position  = _pos</span><br><span class="line"></span><br><span class="line">func set_as_parent(_p: Node2D) -&gt; void:</span><br><span class="line"><span class="keyword">if</span> player.get_parent():</span><br><span class="line">player.get_parent().remove_child(player)</span><br><span class="line">_p.add_child(player)</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">func unparent(_p: Node2D) -&gt; void:</span><br><span class="line">_p.remove_child(player)</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li><li><p>playground添加脚本level.gd</p>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class_name Level extends Node2D</span><br><span class="line"></span><br><span class="line">func _ready() -&gt; void:</span><br><span class="line"><span class="variable language_">self</span>.y_sort_enabled = true</span><br><span class="line">PlayerManager.set_as_parent(<span class="variable language_">self</span>)</span><br><span class="line"><span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li><li><p>调整Autoload加载顺序</p><ul><li>player初始化时依赖PlayerHud，将其提前</li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> godot4制作2D游戏 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> godot4制作2D游戏 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>godot4制作2D游戏12———用户界面</title>
       <link href="/2025/04/22/godot4_2d/godot4_2d_12/"/>
       <url>/2025/04/22/godot4_2d/godot4_2d_12/</url>
